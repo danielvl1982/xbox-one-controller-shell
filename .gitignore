@@ -1,0 +1,7 @@
+# Third-party packs (local reference only, not redistributed)
+ref/third_party/
+
+# Python / tooling caches
+__pycache__/
+*.pyc
+.atl/
