@@ -26,7 +26,8 @@ Expect `watertight: True` and `delta vs source: -62.7` (volume mm³) for the cur
 
 ## Geometry (model coordinates, mm)
 
-Exterior = +Z, panel centre line X = 30.5, paddle rows at Y = 15.8 / 23.5. Left/right are mirrored about X = 30.5.
+Exterior = +Z, panel centre line X = 30.5, paddle rows at Y = 15.8 / 23.5 (Y grows from the battery cage
+towards the grip bottom). Left/right are mirrored about X = 30.5.
 
 - **Hook opening:** straight rectangle 4×6 (+0.25 clearance per side) with a centred 2×2 slit towards the button.
   Inside face: chamfered retaining ramp block (leaves the slit band clear).
@@ -45,11 +46,32 @@ Key parameters:
 | `SW_SIZE, SW_CLEAR, SW_WALL, SW_DEPTH` | 6.0, 0.3, 1.1, 2.0 | Switch frame |
 | `SW_HEIGHT, SW_BODY_H` | 5.0, 3.0 | Switch total height / body (informational: prints plunger tip vs exterior) |
 
+## Provenance (what is measured vs guessed)
+
+| Value | Source | Trust |
+|---|---|---|
+| Opening 4×6 mm, slit 2×2 mm | Caliper on the real Elite plate | Measured |
+| Clearance 0.25 mm/side | Print tolerance chosen by the user | Chosen |
+| `HOOK_DX` 18.55 | Photo estimate (23.05) − 3.5 mm − 1.0 mm from coupon tests | Tuned by test |
+| Button hole position (`BTN_DX`) | Derived: slit tip + 1 mm wall + hole radius | **Derived, unverified** |
+| Rows Y 15.8 / 23.5, hole Ø3.9, `BTN_Y` | Photo calibration (4.41 px/mm), ±1 mm | Estimated |
+| Ramp block shape | Inferred from photos/reference shells | **Inferred, unverified** |
+| Switch body 3.0 mm | Implied by user: 5 mm switch ends flush | Observed |
+| Panel thickness 2.03, panel surface | Ray-cast on the base STL | Measured on the model |
+
+## Update workflow
+
+1. Change a value in the parameter block of `tools/build_backplate.py`.
+2. Regenerate both scripts (see above); check `watertight: True` and the printed switch-tip line.
+3. Print `output/Xbox_One_Backplate_Elite_Paddles_TEST_COUPON.stl`, test with an original paddle and the switch.
+4. Record the result in **History** below and update **Provenance** if a value became measured.
+5. Commit with a conventional message; the `output/` STLs are tracked, so commit them with the parameter change.
+
 ## History (what tests changed)
 
 1. v1 positions came from photo calibration (±1 mm) — `HOOK_DX` 23.05.
 2. Coupon #1: everything was off → shifted **3.5 mm** towards the centre; magnet pockets removed; switch seats added.
-3. Coupon #2 request: another **1 mm** towards the centre → current values.
+3. After coupon #2: another **1 mm** towards the centre → current values. 5 mm switch confirmed flush.
 
 ## Open / next
 
@@ -64,3 +86,4 @@ Key parameters:
 - Dimensions in the original photos were calibrated at 4.41 px/mm; the original Elite photos and the Sketchfab
   Elite Series 2 scan (too smooth to take measurements from) are **no longer in the project**.
 - Fits are unproven until printed: the STL is validated only as a watertight volume plus renders.
+- Exported STLs may contain 1–2 zero-area triangles (float32 rounding); the volume is still valid and slicers ignore them.

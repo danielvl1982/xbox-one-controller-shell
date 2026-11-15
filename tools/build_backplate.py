@@ -1,9 +1,10 @@
-"""Add Elite-style paddle interface (hook slots, button holes, 8x3 magnet pockets)
-to Xbox_One_Backplate_Electronic.stl.
+"""Add the Elite paddle interface to Xbox_One_Backplate_Electronic.stl:
+hook openings (+ retaining ramp block inside), button holes with 6x6 tact-switch seats.
+Magnet pockets are disabled (MAG_Y = ()): magnets are glued on by hand.
 
-All dimensions in mm, model coordinates (exterior = +Z, panel centre X = CX).
-Positions were derived from the Elite interior photo calibrated against the
-battery-cage features (scale 4.41 px/mm). VERIFY against the real Elite plate.
+All dimensions in mm, model coordinates (exterior = +Z, panel centre X = CX, Y grows from the
+battery cage towards the grip bottom). Values come from caliper measures, photo estimates and
+coupon-test shifts: see "Provenance" in README.md before changing them.
 
 Run (from the project root):  uv run --with numpy --with trimesh --with scipy --with networkx --with rtree --with manifold3d --with shapely --with mapbox-earcut python tools/build_backplate.py
 """
@@ -22,7 +23,6 @@ ROW_Y = (15.8, 23.5)       # paddle rows (P1/P3 upper, P2/P4 lower), model Y
 
 # round holes (button column), measured from photo
 BTN_D = 3.9                # hole diameter
-BTN_DX = None              # set below: slit tip + WALL_TO_BTN + hole radius (photo estimate was 28.3)
 BTN_Y = (16.2, 24.1)
 
 # hook openings: straight rectangular through-slots (as in the Elite / Elite V2 shells)
